@@ -1,3 +1,5 @@
 # Compiled class file
-./node_modules
+/.nuxt
+
+# Node module
 /node_modules

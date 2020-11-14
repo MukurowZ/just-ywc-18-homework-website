@@ -1,62 +1,90 @@
-<template>
-  <div>
-    <Nuxt />
-  </div>
+<template lang="pug">
+v-app.index
+  v-main
+    .py-1.px-10.d-flex.justify-center
+      img.justify-left(
+        style="height: 40px;"
+        src="https://search-merchant.xn--42caj4e6bk1f5b1j.com/images/halfhalf-logo.png")
+      .search-box.ml-5.flex-grow-1
+        .d-flex.flex-row(style="flex-wrap: nowrap;")
+          v-select.flex-grow-0.search-select(
+            v-model="selectedSearchType"
+            :items="searchType"
+            single-line
+            dense
+            outlined)
+            template(v-slot:prepend-inner)
+              v-icon mdi-map-marker
+          v-text-field.flex-grow-1.search-input(
+            dense
+            outlined
+            append-icon='mdi-magnify'
+            placeholder='ค้นหา ชื่อ ร้านอาหาร และเครื่องดื่ม ร้านธงฟ้า ร้านค้า OTOP และสินค้าทั่วไป'
+          )
+    .top-nav-bar
+      v-breadcrumbs.pointer(
+        dark
+        :items="breadcrumbItems")
+
+    Nuxt
 </template>
 
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api';
+import ywc18 from 'assets/ywc18';
+
+const defaultLayout = defineComponent({
+  setup() {
+    const selectedSearchType = ref('พื้นที่ใกล้ฉัน');
+    const provinces = ywc18.provinces;
+    const searchType = [ 'พื้นที่ใกล้ฉัน', ...provinces ];
+
+    const breadcrumbItems = [{ text: 'หน้าแรก' }, { text: 'ค้นหา'}];
+    return {
+      searchType,
+      selectedSearchType,
+      breadcrumbItems,
+    }
+  },
+});
+
+export default defaultLayout;
+</script>
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+.v-application {
+  font-family: 'Prompt', sans-serif !important;
+}
+
+.search-box {
+  box-shadow: none;
   box-sizing: border-box;
+  border-color: rgb(180, 180, 180) !important;
+
+  .search-input{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+
+  .search-select{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
+.v-text-field__details {
+  display: none;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
+.top-nav-bar {
+  background-color: #283a7c;
+  min-height: 50px;
+  color: white;
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+  .pointer {
+    cursor: pointer;
+  }
 }
 </style>
