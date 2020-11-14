@@ -37,8 +37,6 @@ export default {
     '@nuxtjs/composition-api',
     // Vuetify https://vuetifyjs.com/
     '@nuxtjs/vuetify',
-    // With options
-    ['@nuxtjs/vuetify', { /* module options */ }]
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
