@@ -1,6 +1,6 @@
 <template lang="pug">
 .price-level-display
-  span(v-for="lv in 4" :class="`${lv > level ? 'text-grey' : 'font-weight-medium'}`")
+  span.font-sm(v-for="lv in 4" :class="`${lv > level ? 'text-grey' : 'font-weight-medium'}`")
     | ฿
 </template>
 

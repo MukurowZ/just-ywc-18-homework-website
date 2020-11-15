@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card.merchant-element
+v-card.merchant-element.pa-1
   .d-flex
     .pic
       img(
@@ -32,7 +32,6 @@ v-card.merchant-element
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api';
-import ywc18 from 'assets/ywc18';
 import PriceLevelDisplay from '../components/PriceLevelDisplay.vue';
 
 const MerchantElement = defineComponent({
@@ -109,9 +108,9 @@ export default MerchantElement;
     background-color: #a1a1a1;
   }
 
-  .font-sm {
-    font-size: 0.9rem;
-  }
+}
+.font-sm {
+  font-size: 0.9rem;
 }
 
 .text-halfhalf-green {
