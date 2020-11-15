@@ -7,7 +7,7 @@ export default {
 
   // Routeing based (https://nuxtjs.org/faq/github-pages)
   router: {
-    base: '/just-ywc-18-homework-website/',
+    base: '/just-ywc-18-homework-website',
   },
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
