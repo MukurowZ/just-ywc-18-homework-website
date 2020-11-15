@@ -2,12 +2,15 @@
 v-app.index
   v-main
     .py-1.px-10.d-flex.justify-center
-      img.justify-left(
+      img.justify-left.d-none.d-sm-flex(
         style="height: 40px;"
-        src="https://search-merchant.xn--42caj4e6bk1f5b1j.com/images/halfhalf-logo.png")
+        src="~/assets/halfhalf-logo.png")
+      img.justify-left.d-flex.d-sm-none(
+        style="height: 40px;"
+        src="~/assets/halfhalfhalf-logo.png")
       .search-box.ml-5.flex-grow-1
         .d-flex.flex-row(style="flex-wrap: nowrap;")
-          v-select.flex-grow-0.search-select(
+          v-select.flex-grow-0.search-select.d-none.d-sm-flex(
             v-model="selectedSearchType"
             :items="searchType"
             single-line
@@ -21,6 +24,8 @@ v-app.index
             append-icon='mdi-magnify'
             placeholder='ค้นหา ชื่อ ร้านอาหาร และเครื่องดื่ม ร้านธงฟ้า ร้านค้า OTOP และสินค้าทั่วไป'
           )
+          v-btn(icon).ml-3
+            v-icon.d-flex.d-sm-none.pointer mdi-filter-outline
     .top-nav-bar
       v-breadcrumbs.pointer(
         dark
@@ -54,24 +59,26 @@ export default defaultLayout;
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 
-.v-application {
-  font-family: 'Prompt', sans-serif !important;
+.filter-button {
+  display: none !important;
+}
+
+.logo-small {
+  display: none;
+}
+
+.logo-normal {
+  display: inline-flex;
 }
 
 .search-box {
   box-shadow: none;
   box-sizing: border-box;
   border-color: rgb(180, 180, 180) !important;
+}
 
-  .search-input{
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-  }
-
-  .search-select{
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
+.v-application {
+  font-family: 'Prompt', sans-serif !important;
 }
 
 .v-text-field__details {

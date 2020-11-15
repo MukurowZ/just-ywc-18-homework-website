@@ -1,6 +1,6 @@
 <template lang="pug">
-v-card.merchant-element.pa-1
-  .d-flex
+.merchant-element
+  v-card.d-none.d-sm-flex.pa-1
     .pic
       img(
         :src="merchant.coverImageId")
@@ -8,19 +8,14 @@ v-card.merchant-element.pa-1
       .d-flex
         .font-weight-bold.mr-3
           | {{ merchant.shopNameTH }}
-        .ship.pa-1(:class="`${merchant.isOpen === 'Y' ? 'halfhalf-green' : 'halfhalf-grey'}`")
-          | {{ merchant.isOpen === 'Y' ? 'เปิดอยู่' : 'ปิดแล้ว' }}
-      .d-flex
-        .text-grey.font-sm {{ merchant.subcategoryName }} |
-        PriceLevelDisplay.ml-2(:level="merchant.priceLevel")
-        .ml-2.text-grey.font-sm {{ '| ' }} {{ merchant.addressDistrictName }} {{ merchant.addressProvinceName }}
+        .ship.pa-1(:class="getOpenClass(merchant.isOpen)")
+          | {{ getOpenStatus(merchant.isOpen) }}
+      .text-grey.font-sm(v-html="getMerchantDescription()")
       br
       .text-grey.font-sm(v-html="merchant.highlightText")
-      .d-flex
+      .d-flex(v-if="merchant.categoryName === 'ร้านอาหาร'")
         .font-sm เมนูแนะนำ:
-        span.ml-1.text-grey.font-sm(v-for="(recItem, i) in merchant.recommendedItems")
-          |  {{ recItem }}
-          span(v-if="i !== merchant.recommendedItems.length - 1") ,
+        .text-grey.font-sm {{ getRecommendMenu() }}
       br
       .d-flex
         v-icon.text-halfhalf-green.mr-1(
@@ -28,14 +23,35 @@ v-card.merchant-element.pa-1
           :key="`${merchant.shopNameTH}-${facility}`"
           ) {{ facilityToIcon(facility) }}
 
+  v-card.d-flex.flex-column.d-sm-none.mx-auto.mb-6(max-width="600")
+    .pic(style="width: 100%")
+      img(
+        :src="merchant.coverImageId")
+    v-card-text
+      .d-flex
+        .font-weight-bold.mr-3
+          | {{ merchant.shopNameTH }}
+        .ship.pa-1(:class="getOpenClass(merchant.isOpen)")
+          | {{ getOpenStatus(merchant.isOpen) }}
+      .text-grey.font-sm(v-html="getMerchantDescription()")
+      br
+      .text-grey.font-sm(v-html="merchant.highlightText")
+      .d-flex(v-if="merchant.categoryName === 'ร้านอาหาร'")
+        .font-sm เมนูแนะนำ:
+        .text-grey.font-sm {{ getRecommendMenu() }}
+      br
+      .d-flex
+        v-icon.text-halfhalf-green.mr-1(
+          v-for="facility in merchant.facilities"
+          :key="`${merchant.shopNameTH}-${facility}`"
+          ) {{ facilityToIcon(facility) }}
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api';
-import PriceLevelDisplay from '../components/PriceLevelDisplay.vue';
 
 const MerchantElement = defineComponent({
-  setup() {
+  setup(props: any) {
     function facilityToIcon(facility: string) {
       switch(facility) {
         case 'ที่จอดรถ':
@@ -48,9 +64,47 @@ const MerchantElement = defineComponent({
       return '';
     };
 
+    function getOpenStatus(status: string) {
+      if (status === 'Y') return 'เปิดอยู่';
+      if (status === 'N') return 'ปิดแล้ว';
+      return '';
+    }
+
+    function getOpenClass(status: string) {
+      if (status === 'Y') return 'halfhalf-green';
+      if (status === 'N') return 'halfhalf-grey';
+      return '';
+    }
+
+    function getMerchantDescription() {
+      let output = '';
+      output += props.merchant.subcategoryName;
+      output += ' | ';
+      for(let i = 0; i < 4; i += 1) {
+        if (props.merchant.priceLevel >= i) output += '<b>฿</b>';
+        else output += '฿';
+      }
+      output += ' | ';
+      output += props.merchant.addressDistrictName;
+      output += props.merchant.addressProvinceName;
+      return output;
+    }
+
+    function getRecommendMenu() {
+      let output = ' ';
+      props.merchant.recommendedItems.forEach((elm: any, index: number) => {
+        output += elm;
+        if (index !== props.merchant.recommendedItems.length - 1) output += ', ';
+      });
+      return output;
+    }
+
     return {
       facilityToIcon,
-      PriceLevelDisplay,
+      getOpenStatus,
+      getOpenClass,
+      getMerchantDescription,
+      getRecommendMenu,
     };
   },
   props: {

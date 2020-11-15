@@ -48,7 +48,7 @@ import { computed, defineComponent, reactive, ref } from '@nuxtjs/composition-ap
 import ywc18 from 'assets/ywc18';
 
 const SidebarFilter = defineComponent({
-  setup() {
+  setup(props: any, context: any) {
     const categories = [{ name: 'ทั้งหมด', subcategories: [], }, ...ywc18.categories ];
     const selectedCategory = ref('ร้านอาหารและเครื่องดื่ม');
 
