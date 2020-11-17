@@ -40,8 +40,10 @@ export default index;
 
 <style lang="scss">
 .index {
-  background: rgb(0,212,255);
+  // background: rgb(0,212,255);
   background: linear-gradient(4deg, rgba(0,212,255,1) 6%, rgba(255,255,255,1) 19%, rgba(255,255,255,1) 89%);
+  background-image: url('https://search-merchant.xn--42caj4e6bk1f5b1j.com/images/result-bg.png?fbclid=IwAR2lutABcSBPZy3Q10wyWMklbEftLkV4vXd_dgP4rFdWjK3pCVVrhK6e87Q');
+  background-size: cover;
   .sidebar {
     max-width: 300px;
   }
