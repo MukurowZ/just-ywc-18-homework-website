@@ -24,7 +24,9 @@ v-app.index
             append-icon='mdi-magnify'
             placeholder='ค้นหา ชื่อ ร้านอาหาร และเครื่องดื่ม ร้านธงฟ้า ร้านค้า OTOP และสินค้าทั่วไป'
           )
-          v-btn(icon).ml-3
+          v-btn(
+            icon
+          ).ml-3
             v-icon.d-flex.d-sm-none.pointer mdi-filter-outline
     .top-nav-bar
       v-breadcrumbs.pointer(

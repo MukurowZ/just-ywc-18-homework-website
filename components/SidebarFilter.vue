@@ -3,7 +3,10 @@ v-card.sidebar-filter
   .pa-3
     .merchant-type-filter
       .font-weight-bold ประเภทร้านค้า
-      v-radio-group(v-model="selectedCategory")
+      v-radio-group(
+        v-model="selectedCategory"
+        @input="$emit('filterCategoryChange', selectedCategory)"
+        )
         v-radio(
           v-for="category in categories"
           :key="category.name"
@@ -15,6 +18,7 @@ v-card.sidebar-filter
       .font-weight-bold จังหวัด/ใกล้ฉัน
       v-select.flex-grow-0.search-select(
         v-model="selectedSearchProvince"
+        @input="$emit('filterProvinceChange', selectedSearchProvince)"
         :items="searchProvince"
         single-line
         dense
@@ -26,18 +30,22 @@ v-card.sidebar-filter
       .font-weight-bold ราคา
       v-select.flex-grow-0.search-select(
         v-model="selectedSearchPrice"
+        @input="$emit('filterPriceChange', selectedSearchPrice)"
         :items="priceRanges"
         :placeholder="'กรุณาเลือก'"
         single-line
         dense
         outlined)
 
-    .merchant-subcategory-filter.mt-5(v-if="subCategories")
+    .merchant-subcategory-filter.mt-5(v-if="subCategories.length > 0")
       .font-weight-bold ประเภทร้านอาหารและเครื่องดื่ม
-      v-radio-group(v-model="subCategoryFilter")
+      v-radio-group(
+        v-model="subCategoryFilter"
+        @input="$emit('filterSubCategoryChange', subCategoryFilter)"
+        )
         v-radio(
-          v-for="subCategory in subCategories"
-          :key="subCategory"
+          v-for="(subCategory, i) in subCategories"
+          :key="`${subCategory}-${i}`"
           :label="subCategory"
           :value="subCategory"
           )
@@ -56,7 +64,7 @@ const SidebarFilter = defineComponent({
     const selectedSearchProvince = ref('พื้นที่ใกล้ฉัน');
     const searchProvince = [ 'พื้นที่ใกล้ฉัน', ...provinces ];
 
-    const priceRanges = ywc18.priceRange;
+    const priceRanges = [ 'ทุกช่วงราคา', ...ywc18.priceRange ];
     const selectedSearchPrice = ref('');
 
     const subCategoryFilter = ref('ทั้งหมด');

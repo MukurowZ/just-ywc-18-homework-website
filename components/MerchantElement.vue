@@ -6,8 +6,7 @@
         :src="merchant.coverImageId")
     .ml-3.pa-2.d-flex.flex-column
       .d-flex
-        .font-weight-bold.mr-3
-          | {{ merchant.shopNameTH }}
+        .font-weight-bold.mr-3(v-if="merchant.shopNameTH") {{ merchant.shopNameTH }}
         .ship.pa-1(:class="getOpenClass(merchant.isOpen)")
           | {{ getOpenStatus(merchant.isOpen) }}
       .text-grey.font-sm(v-html="getMerchantDescription()")
@@ -29,8 +28,7 @@
         :src="merchant.coverImageId")
     v-card-text
       .d-flex
-        .font-weight-bold.mr-3
-          | {{ merchant.shopNameTH }}
+        .font-weight-bold.mr-3(v-if="merchant.shopNameTH") {{ merchant.shopNameTH }}
         .ship.pa-1(:class="getOpenClass(merchant.isOpen)")
           | {{ getOpenStatus(merchant.isOpen) }}
       .text-grey.font-sm(v-html="getMerchantDescription()")
@@ -43,7 +41,7 @@
       .d-flex
         v-icon.text-halfhalf-green.mr-1(
           v-for="facility in merchant.facilities"
-          :key="`${merchant.shopNameTH}-${facility}`"
+          :key="`${facility}`"
           ) {{ facilityToIcon(facility) }}
 </template>
 
